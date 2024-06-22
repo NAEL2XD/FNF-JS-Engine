@@ -7,9 +7,9 @@ name: Build
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ main ]
+    branches: [ 4.3-workflows ]
   pull_request:
-    branches: [ main ]
+    branches: [ 4.3-workflows ]
 
   # For release builds
   workflow_call:
@@ -33,7 +33,7 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: 4.3.4
       - name: Restore Previous Cache
         id: cache-build-linux-restore
         uses: actions/cache/restore@main
@@ -107,7 +107,7 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: 4.3.4
       - name: Restore Previous Cache
         id: cache-build-windows-restore
         uses: actions/cache/restore@main
@@ -178,7 +178,7 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: 4.3.4
       - name: Restore Previous Cache
         id: cache-build-macos-restore
         uses: actions/cache/restore@main
