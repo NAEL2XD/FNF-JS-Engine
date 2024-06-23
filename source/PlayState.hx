@@ -6535,7 +6535,8 @@ class PlayState extends MusicBeatState
 					health += note.hitHealth * healthGain * polyphony;
 				}
 				if(!note.noAnimation && ClientPrefs.charsAndBG && (!oppTrigger ? charAnimsFrame : oppAnimsFrame) < 4 && (!note.isSustainNote || ClientPrefs.oldSusStyle && note.isSustainNote)) {
-					(!oppTrigger ? charAnimsFrame : oppAnimsFrame) += 1;
+					if (!oppTrigger) charAnimsFrame += 1;
+					else oppAnimsFrame += 1;
 					final animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
 
 					playerChar = (!oppTrigger ? (doGf ? gf : boyfriend) : dad);
@@ -6648,7 +6649,8 @@ class PlayState extends MusicBeatState
 				}
 			}
 			if(!noteAlt.noAnimation && ClientPrefs.charsAndBG && (!oppTrigger ? charAnimsFrame : oppAnimsFrame) < 4) {
-				(!oppTrigger ? charAnimsFrame : oppAnimsFrame) += 1;
+				if (!oppTrigger) charAnimsFrame += 1;
+					else oppAnimsFrame += 1;
 				if (noteAlt.gfNote)
 				{
 					inline gf.playAnim(singAnimations[(noteAlt.noteData)] + noteAlt.animSuffix, true);
