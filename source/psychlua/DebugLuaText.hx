@@ -6,7 +6,7 @@ class DebugLuaText extends FlxText
 	public var parentGroup:FlxTypedGroup<DebugLuaText>;
 	public function new(text:String, parentGroup:FlxTypedGroup<DebugLuaText>, color:FlxColor) {
 		this.parentGroup = parentGroup;
-		super(10, 10, 0, text, 16);
+		super(10, 10, 1260, text, 16); // ok guys tell me why you set them to 0 instead of 1260
 		setFormat(Paths.font("old_windows.ttf"), 16, color, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scrollFactor.set();
 		borderSize = 1;
