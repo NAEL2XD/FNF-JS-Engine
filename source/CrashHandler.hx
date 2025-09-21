@@ -10,6 +10,8 @@ import openfl.errors.Error;
 import openfl.events.ErrorEvent;
 import openfl.events.UncaughtErrorEvent;
 
+using StringTools;
+
 /**
  * Crash Handler.
  * @author YoshiCrafter29 and MAJigsaw77
@@ -94,6 +96,8 @@ class CrashHandler {
 }
 
 class Crash extends MusicBeatState {
+	var stripClub:Array<String> = [];
+
 	override public function create() {
 		if (FlxG.sound.music != null) FlxG.sound.music.stop();
 
@@ -130,7 +134,7 @@ class Crash extends MusicBeatState {
 		ohNo4.y = 620;
 		add(ohNo4);
 
-		var stripClub:Array<String> = CrashHandler.errorMessage.split("\n");
+		stripClub = CrashHandler.errorMessage.split("\n");
 		var i:Int = -1;
 		var crash:Array<FlxText> = [];
 
@@ -203,7 +207,7 @@ class Crash extends MusicBeatState {
 				countText.text = countDown + "";
 
 				if (countDown == 0) {
-					CoolUtil.browserLoad("https://github.com/JordanSantiagoYT/FNF-JS-Engine/issues/new?template=bugs.yml");
+					CoolUtil.browserLoad('https://github.com/JordanSantiagoYT/FNF-JS-Engine/issues/new?title=${StringTools.urlEncode('Exception: ${stripClub[0]}')}&body=${StringTools.urlEncode('```\nDo NOT remove this huge chunk of this, doing so will give you 0 HELP.\n${stripClub.join("\n")}```')}');
 					FlxG.switchState(MainMenuState.new);
 				}
 			}, 10);

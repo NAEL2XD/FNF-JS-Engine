@@ -339,7 +339,7 @@ class Paths
 
 		if (library != null){
 			//trace(getLibraryPath(file, library));
-			return getLibraryPath(file, library);	
+			return getLibraryPath(file, library);
 		}
 
 		if (currentLevel != null)
@@ -563,7 +563,7 @@ class Paths
 		var eventsKey:String = formatToSongPath(song) + '/events';
 		return (!onlyEventsString ? eventsKey : 'events');
 	}
-	
+
 	inline public static function imagePath(key:String, ?folder:String):String
 		return getPath('images/$key.$IMAGE_EXT', IMAGE, folder);
 

@@ -89,10 +89,15 @@ class NoteSplash extends FlxSprite
 		}
 
 		var splashToPlay:Int = direction;
-
 		animation.play('note' + splashToPlay + '-' + (animNum), true);
 
-		if(animation.curAnim != null)animation.curAnim.frameRate = FlxG.random.int(config.minFps, config.maxFps);
+		var min = 24, max = 24;
+		try {
+			min = config.minFps;
+			max = config.maxFps;
+		} catch(e) {} // Config Missing, resorting to default FPS.
+
+		if(animation.curAnim != null)animation.curAnim.frameRate = FlxG.random.int(min, max);
 	}
 
 	public static function getSplashSkinPostfix()
