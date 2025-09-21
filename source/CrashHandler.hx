@@ -207,7 +207,7 @@ class Crash extends MusicBeatState {
 				countText.text = countDown + "";
 
 				if (countDown == 0) {
-					CoolUtil.browserLoad('https://github.com/JordanSantiagoYT/FNF-JS-Engine/issues/new?title=${StringTools.urlEncode('Exception: ${stripClub[0]}')}&body=${StringTools.urlEncode('```\nDo NOT remove this huge chunk of this, doing so will give you 0 HELP.\n\n${stripClub.join("\n")}\n```')}');
+					CoolUtil.browserLoad('https://github.com/JordanSantiagoYT/FNF-JS-Engine/issues/new?title=${StringTools.urlEncode(stripClub[0])}&body=${StringTools.urlEncode('```\nDo NOT remove this huge chunk of this, doing so will give you 0 HELP.\n\n${stripClub.join("\n")}\n```')}');
 					FlxG.switchState(MainMenuState.new);
 				}
 			}, 10);
