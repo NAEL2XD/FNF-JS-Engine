@@ -1707,10 +1707,8 @@ class PlayState extends MusicBeatState
 		var newText:DebugLuaText = luaDebugGroup.recycle(DebugLuaText);
 		newText.text = text;
 		newText.disableTime = 6;
-		newText.alpha = 1;
 		newText.width = 1260;
 		newText.setPosition(10, 8 - newText.height);
-   		newText.setFormat(Paths.font("old_windows.ttf"), 20, color);
 		luaDebugGroup.forEachAlive(function(spr:DebugLuaText) {
 			spr.y += newText.height + 2;
 		});
