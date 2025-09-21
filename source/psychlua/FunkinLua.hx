@@ -478,12 +478,9 @@ class FunkinLua {
 			#end
 		});
 
+		// You could like do that btw.
 		registerFunction("getRunningScripts", function(){
-			var runningScripts:Array<String> = [];
-			for (idx in 0...PlayState.instance.luaArray.length)
-				runningScripts.push(PlayState.instance.luaArray[idx].scriptName);
-
-			return runningScripts;
+			return [for (i in PlayState.instance.luaArray) i.scriptName];
 		});
 
 		registerFunction("callOnLuas", function(?funcName:String, ?args:Array<Dynamic>, ignoreStops=false, ignoreSelf=true, ?exclusions:Array<String>){

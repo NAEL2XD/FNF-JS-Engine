@@ -17,8 +17,19 @@ using StringTools;
  * @author YoshiCrafter29 and MAJigsaw77
 */
 
+typedef PSInfo = {
+	onPlaystate:Bool,
+	songName:String,
+	modName:String
+}
+
 class CrashHandler {
 	public static var errorMessage:String = "";
+	public static var psi:PSInfo = {
+		onPlaystate: false,
+		songName: "",
+		modName: ""
+	};
 
 	public static function init():Void {
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onUncaughtError);
@@ -30,6 +41,13 @@ class CrashHandler {
 			e.preventDefault();
 			e.stopPropagation();
 			e.stopImmediatePropagation();
+
+			psi.onPlaystate = false;
+			if (FlxG.state is PlayState) {
+				psi.onPlaystate = true;
+				psi.songName = PlayState.SONG.song;
+				psi.modName = Paths.currentModDirectory;
+			}
 
 			errorMessage = "";
 
@@ -207,7 +225,16 @@ class Crash extends MusicBeatState {
 				countText.text = countDown + "";
 
 				if (countDown == 0) {
-					CoolUtil.browserLoad('https://github.com/JordanSantiagoYT/FNF-JS-Engine/issues/new?title=${StringTools.urlEncode(stripClub[0])}&body=${StringTools.urlEncode('```\nDo NOT remove this huge chunk of this, doing so will give you 0 HELP.\n\n${stripClub.join("\n")}\n```')}');
+					var crashInfo:String = '```\nDo NOT remove this huge chunk of this, doing so will give you 0 HELP.\n\n${stripClub.join("\n")}\n```';
+					crashInfo += '\n\nAdditional Info:\n- Version: ${MainMenuState.psychEngineJSVersionNumber}\n';
+					crashInfo += '- Version: ${MainMenuState.psychEngineJSVersionNumber}\n';
+
+					if (CrashHandler.psi.onPlaystate) {
+						crashInfo += '- Mod Running: "${CrashHandler.psi.modName}"\n';
+						crashInfo += '- Song Name: "${CrashHandler.psi.songName}"\n';
+					}
+
+					CoolUtil.browserLoad('https://github.com/JordanSantiagoYT/FNF-JS-Engine/issues/new?title=${StringTools.urlEncode(stripClub[0])}&body=${StringTools.urlEncode(crashInfo)}');
 					FlxG.switchState(MainMenuState.new);
 				}
 			}, 10);
