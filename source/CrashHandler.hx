@@ -226,7 +226,7 @@ class Crash extends MusicBeatState {
 
 				if (countDown == 0) {
 					var crashInfo:String = '```\nDo NOT remove this huge chunk of this, doing so will give you 0 HELP.\n\n${stripClub.join("\n")}\n```';
-					crashInfo += '\n\nAdditional Info:\n- Version: ${MainMenuState.psychEngineJSVersionNumber}\n';
+					crashInfo += '\n\nAdditional Info:\n';
 					crashInfo += '- Version: ${MainMenuState.psychEngineJSVersionNumber}\n';
 
 					if (CrashHandler.psi.onPlaystate) {
