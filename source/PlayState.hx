@@ -1708,6 +1708,8 @@ class PlayState extends MusicBeatState
 		newText.text = text;
 		newText.disableTime = 6;
 		newText.width = 1260;
+		newText.color = color;
+		newText.wordWrap = true;
 		newText.setPosition(10, 8 - newText.height);
 		luaDebugGroup.forEachAlive(function(spr:DebugLuaText) {
 			spr.y += newText.height + 2;
