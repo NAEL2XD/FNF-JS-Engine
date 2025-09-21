@@ -121,21 +121,10 @@ class Paths
 		while(!shouldBreakLoop) {
 			var animID:Int = maxAnims + 1;
 			for (i in 0...Note.colArray.length) {
-				try {
-					if (!addAnimAndCheck('note$i-$animID', '$animName ${Note.colArray[i]} $animID', 24, false)) {
-						//Reached the maximum amount of anims, break the loop
-						shouldBreakLoop = true;
-						break;
-					}
-				} catch(e) {
-					// Duct tape 2 (uses HTTP for this), does without internet work?
-
-					var prefx:String = ClientPrefs.noteSkin == "Default" ? "" : '-${ClientPrefs.noteSkin.toLowerCase()}';
-					var http:Http = new Http('https://github.com/JordanSantiagoYT/FNF-JS-Engine/blob/main/assets/shared/images/noteSplashes/noteSplashes$prefx.txt');
-					http.onData = e -> {
-						File.saveContent('assets/shared/images/noteSplashes/noteSplashes$prefx.txt', e);
-					};
-					http.request();
+				if (!addAnimAndCheck('note$i-$animID', '$animName ${Note.colArray[i]} $animID', 24, false)) {
+					//Reached the maximum amount of anims, break the loop
+					shouldBreakLoop = true;
+					break;
 				}
 			}
 			if (!shouldBreakLoop) maxAnims++;
@@ -146,16 +135,19 @@ class Paths
 		splashSkinAnimsMap.set(splashSkin, splashAnimation);
 		splashAnimCountMap.set(splashSkin, maxAnims);
 	}
-	public static function addAnimAndCheck(name:String, anim:String, ?framerate:Int = 24, ?loop:Bool = false)
-	{
-		var animFrames = [];
-		@:privateAccess
-		splashAnimation.findByPrefix(animFrames, anim); // adds valid frames to animFrames
+	public static function addAnimAndCheck(name:String, anim:String, ?framerate:Int = 24, ?loop:Bool = false) {
+		try {
+			var animFrames = [];
+			@:privateAccess
+			splashAnimation.findByPrefix(animFrames, anim); // adds valid frames to animFrames
 
-		if(animFrames.length < 1) return false;
+			if(animFrames.length < 1) return false;
 
-		splashAnimation.addByPrefix(name, anim, framerate, loop);
-		return true;
+			splashAnimation.addByPrefix(name, anim, framerate, loop);
+			return true;
+		} catch(e) {
+			return false;
+		}
 	}
 	public static function initSplashConfig(skin:String)
 	{

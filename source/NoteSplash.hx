@@ -1,5 +1,6 @@
 package;
 
+import sys.thread.Thread;
 import flixel.graphics.frames.FlxFrame.FlxFrameAngle;
 import flixel.system.FlxAssets.FlxShader;
 import shaders.RGBPalette.RGBShaderReference;
@@ -95,7 +96,23 @@ class NoteSplash extends FlxSprite
 		try {
 			min = config.minFps;
 			max = config.maxFps;
-		} catch(e) {} // Config Missing, resorting to default FPS.
+		} catch(e) {
+			// Duct Tape again.
+			Thread.create(() -> {
+				try {
+					var prefx:String = ClientPrefs.noteSkin == "Default" ? "" : '-${ClientPrefs.noteSkin.toLowerCase()}';
+					var http:Http = new Http('https://raw.githubusercontent.com/JordanSantiagoYT/FNF-JS-Engine/refs/heads/main/assets/shared/images/noteSplashes/noteSplashes$prefx.txt');
+					http.onData = e -> {
+						File.saveContent('assets/shared/images/noteSplashes/noteSplashes$prefx.txt', e);
+
+						if (FlxG.state is PlayState) {
+							PlayState.instance.addTextToDebug("[WARNING] Note Splashes is invalid and has been replaced from source's assets, you will see inaccuracies from splashes, reloading PlayState will fix the problem.", 0xFFFFF000);
+						}
+					};
+					http.request();
+				} catch(e) {}
+			});
+		} // Config Missing, resorting to default FPS.
 
 		if(animation.curAnim != null)animation.curAnim.frameRate = FlxG.random.int(min, max);
 	}

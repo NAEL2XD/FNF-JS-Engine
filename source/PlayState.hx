@@ -1706,11 +1706,11 @@ class PlayState extends MusicBeatState
 		#if LUA_ALLOWED
 		var newText:DebugLuaText = luaDebugGroup.recycle(DebugLuaText);
 		newText.text = text;
-		newText.color = color;
 		newText.disableTime = 6;
 		newText.alpha = 1;
+		newText.width = 1260;
 		newText.setPosition(10, 8 - newText.height);
-   		newText.setFormat(Paths.font("old_windows.ttf"));
+   		newText.setFormat(Paths.font("old_windows.ttf"), 20, color);
 		luaDebugGroup.forEachAlive(function(spr:DebugLuaText) {
 			spr.y += newText.height + 2;
 		});
@@ -2786,7 +2786,7 @@ class PlayState extends MusicBeatState
 								missHealth: swagNote.missHealth,
 								wasHit: false,
 								multSpeed: 1,
-								multAlpha: 1,	
+								multAlpha: 1,
 								noteDensity: currentMultiplier,
 								hitCausesMiss: swagNote.hitCausesMiss,
 								ignoreNote: swagNote.ignoreNote
