@@ -24,6 +24,7 @@ import neko.vm.Gc;
 
 
 @:access(openfl.display.BitmapData)
+//@:nullSafety // not yet
 class Paths
 {
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
@@ -73,7 +74,6 @@ class Paths
 		else defaultSkin = 'noteskins/NOTE_assets';
 		trace(defaultSkin);
 	}
-
 	public static function initNote(?noteSkin:String)
 	{
 		// Do this to be able to just copy over the note animations and not reallocate it
@@ -96,7 +96,9 @@ class Paths
 	//Note Splash initialization
 	public static function initSplash(?splashSkin:String)
 	{
-		if (splashSkin.length < 1) splashSkin = 'noteSplashes/noteSplashes' + NoteSplash.getSplashSkinPostfix();
+		var skin:String = (splashSkin != null && splashSkin.length > 0)
+			? splashSkin
+			: 'noteSplashes/noteSplashes' + NoteSplash.getSplashSkinPostfix();
 		splashFrames = getSparrowAtlas(splashSkin);
 		if (splashFrames == null) splashFrames = getSparrowAtlas('noteSplashes/noteSplashes' + NoteSplash.getSplashSkinPostfix());
 
@@ -111,11 +113,9 @@ class Paths
 		var config = splashConfigs.get(splashSkin);
 		if (config == null) config = initSplashConfig(splashSkin);
 		var maxAnims:Int = 0;
-		var animName:String = 'note splash';
-		if (config != null)
-			animName = config.anim;
-		else if(animName == null)
-			animName = config != null ? config.anim : 'note splash';
+		var animName:String = (config != null && config.anim != null && config.anim.length > 0)
+			? config.anim
+			: "note splash";
 
 		var shouldBreakLoop = false;
 		while(!shouldBreakLoop) {
@@ -351,7 +351,7 @@ class Paths
 			if(currentLevel != 'shared') {
 				levelPath = getLibraryPathForce(file, currentLevel);
 				if (OpenFlAssets.exists(levelPath, type)){
-					trace(levelPath);
+					//trace(levelPath);
 					return levelPath;
 				}
 			}
@@ -531,13 +531,7 @@ class Paths
     static public function playMenuMusic(force:Bool = false, volume:Float = 1):Void
     {
         if (FlxG.sound.music == null || force) {
-            var playAprilFools:Bool = false;
-
-            // Check if it's April Fools Day
-            #if FUNNY_ALLOWED
-			if (DateUtils.isAprilFools())
-				playAprilFools = true;
-            #end
+            final playAprilFools:Bool = DateUtils.isAprilFools();
 
             if (playAprilFools) {
                 FlxG.sound.playMusic(Paths.music('aprilFools'), volume);

@@ -112,13 +112,7 @@
 		<assets path='example_mods' rename='mods' embed='false'/>
 	</section>
 
-	<!-- OpenAL config -->
-	<section if="desktop">
-		<assets path="alsoft.txt" rename="plugins/alsoft.ini" type="text" if="windows"/>
-		<assets path="alsoft.txt" rename="plugins/alsoft.conf" type="text" unless="windows"/>
-	</section>
-
-	<assets path="assets/fonts" />
+	<assets path="assets/fonts"/>
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="lime" />

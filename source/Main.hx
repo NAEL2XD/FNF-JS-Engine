@@ -11,11 +11,6 @@ import openfl.display.Sprite;
 import lime.graphics.Image;
 #end
 
-#if desktop
-import backend.ALSoftConfig; // Just to make sure DCE doesn't remove this, since it's not directly referenced anywhere else.
-#end
-
-
 #if linux
 @:cppInclude('./external/gamemode_client.h')
 @:cppFileCode('
@@ -119,6 +114,9 @@ class Main extends Sprite {
 	}
 
 	public static var askedToUpdate:Bool = false;
+	
+	public static function isPlayState():Bool
+		return Type.getClassName(Type.getClass(FlxG.state)) == 'PlayState';
 
 	private function setupGame():Void {
 		var stageWidth:Int = Lib.current.stage.stageWidth;
@@ -132,7 +130,6 @@ class Main extends Sprite {
 			game.height = Math.ceil(stageHeight / game.zoom);
 		};
 
-		// #if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		ClientPrefs.loadDefaultStuff();
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
 

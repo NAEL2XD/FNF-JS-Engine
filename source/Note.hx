@@ -401,7 +401,7 @@ class Note extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		if (Type.getClassName(Type.getClass(FlxG.state)) == 'PlayState' && PlayState.instance.cpuControlled) return;
+		if (Main.isPlayState() && PlayState.instance.cpuControlled) return;
 
 		super.update(elapsed);
 
